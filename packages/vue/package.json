@@ -1,0 +1,25 @@
+{
+  "name": "nosc",
+  "version": "1.0.0",
+  "description": "无样式组件",
+  "publishConfig": { "access": "public" },
+  "author": "codercsx",
+  "license": "ISC",
+  "keywords": [],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.4",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "@vue/tsconfig": "^0.5.1",
+    "@vueuse/core": "^10.11.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0",
+    "vite-plugin-dts": "^4.0.1",
+    "vue": "^3.4.36",
+    "vue-tsc": "^2.0.29"
+  }
+}
