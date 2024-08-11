@@ -1,13 +1,13 @@
-const a = "1111";
+const a = '1111'
 
-const b = "2222";
+const b = '2222'
 
-const fn = () => {
-  console.log("fn");
-};
+function fn() {
+  console.log('fn')
+}
 
-const add = (a: number, b: number) => {
-  return a + b;
-};
+function add(a: number, b: number) {
+  return a + b
+}
 
-export { a, b, fn, add };
+export { a, b, fn, add }
