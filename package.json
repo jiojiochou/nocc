@@ -3,16 +3,20 @@
   "type": "module",
   "version": "1.0.0",
   "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
   "main": "index.js",
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "author": "",
-    "license": "ISC",
-    "keywords": "无样式组件",
-    "prepare": "npx simple-git-hooks"
+    "prepare": "npx simple-git-hooks",
+    "clear": "rimraf packages/**/dist",
+    "build": "pnpm run clear && pnpm -r --filter=./packages/** run build"
   },
   "commitlint": {
     "extends": [
@@ -26,6 +30,7 @@
     "@types/node": "^22.1.0",
     "eslint": "^9.8.0",
     "lint-staged": "^15.2.8",
+    "rimraf": "^6.0.1",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.4"
   },
