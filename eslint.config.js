@@ -1,7 +1,7 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
-  ignores: ['/dist', '/node_modules', '/packages/**/dist', '/packages/**/node_modules'],
+  ignores: ['/dist', '/node_modules', '/packages/**/dist', '/packages/**/node_modules', '/tsconfig.json'],
   rules: {
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
     '@typescript-eslint/ban-ts-comment': 'warn',
