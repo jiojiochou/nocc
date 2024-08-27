@@ -11,34 +11,8 @@
     "access": "public"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "prepare": "npx simple-git-hooks",
-    "clear": "rimraf packages/**/dist",
-    "build": "pnpm run clear && pnpm -r --filter=./packages/** run build"
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.24.1",
-    "@commitlint/cli": "^19.4.0",
-    "@commitlint/config-conventional": "^19.2.2",
-    "@types/node": "^22.1.0",
-    "eslint": "^9.8.0",
-    "lint-staged": "^15.2.8",
-    "rimraf": "^3.0.2",
-    "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.5.4"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged",
-    "commit-msg": "pnpm commitlint --edit ${1}"
-  },
-  "lint-staged": {
-    "*": "eslint --fix"
+    "eslint": "^9.8.0"
   }
 }
