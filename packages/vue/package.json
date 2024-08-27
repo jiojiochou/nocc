@@ -1,7 +1,7 @@
 {
   "name": "nosc",
   "version": "1.0.0",
-  "description": "无样式组件",
+  "description": "no style component of vue",
   "publishConfig": {
     "access": "public"
   },

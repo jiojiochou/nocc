@@ -2,14 +2,16 @@
   "name": "playground",
   "type": "module",
   "version": "0.0.0",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "nosc": "link:../../packages/vue",
+    "@nosc/vue": "link:../../packages/vue",
     "vue": "^3.4.35"
   },
   "devDependencies": {
