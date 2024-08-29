@@ -3,10 +3,9 @@
     "version": "0.0.1",
     "description": "all components are settled here",
     "main": "index.ts",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+    "module": "index.ts",
+    "peerDependencies": {
+      "vue": "^3.4.38"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
+    "types": "index.d.ts"
 }
