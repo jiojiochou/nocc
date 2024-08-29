@@ -15,7 +15,11 @@ importers:
         specifier: ^3.4.38
         version: 3.4.38(typescript@5.5.4)
 
-  packages/components: {}
+  packages/components:
+    dependencies:
+      vue:
+        specifier: ^3.4.38
+        version: 3.4.38(typescript@5.5.4)
 
   packages/utils:
     dependencies:

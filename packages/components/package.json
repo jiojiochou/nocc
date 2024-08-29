@@ -3,9 +3,7 @@
     "version": "0.0.1",
     "description": "all components are settled here",
     "main": "index.ts",
-    "module": "index.ts",
     "peerDependencies": {
       "vue": "^3.4.38"
-    },
-    "types": "index.d.ts"
+    }
 }
