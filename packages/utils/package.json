@@ -1,0 +1,14 @@
+{
+    "name": "@nosc/utils",
+    "private": true,
+    "license": "MIT",
+    "main": "index.ts",
+    "peerDependencies": {
+      "vue": "^3.4.38"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": ""
+  }
