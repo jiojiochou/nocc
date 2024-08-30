@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@nosc/components':
+        specifier: workspace:^
+        version: link:packages/components
       typescript:
         specifier: ^5.5.4
         version: 5.5.4

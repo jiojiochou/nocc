@@ -23,6 +23,7 @@
     "node": ">= 18"
   },
   "dependencies": {
+    "@nosc/components": "workspace:*",
     "typescript": "^5.5.4",
     "vue": "^3.4.38"
   }
