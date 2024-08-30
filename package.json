@@ -15,9 +15,7 @@
   },
   "packageManager": "pnpm@9.7.1",
   "workspaces": [
-    "packages/*",
-    "play",
-    "docs"
+    "packages/*"
   ],
   "engines": {
     "node": ">= 18"
