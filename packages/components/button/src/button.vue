@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { defineOptions } from 'vue'
+import { defineOptions, ref } from 'vue'
 
 defineOptions({
   name: 'NButton',
 })
+
+const tag = ref('button')
 </script>
 
 <template>
