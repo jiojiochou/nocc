@@ -21,8 +21,7 @@
     "prepare": "npx simple-git-hooks"
   },
   "dependencies": {
-    "@nosc/components": "workspace:*",
-    "vue": "^3.4.38"
+    "@nosc/components": "workspace:*"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.6.2",
@@ -32,7 +31,9 @@
     "eslint": "^9.10.0",
     "lint-staged": "^15.2.10",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vue": "^3.4.38",
+    "vue-tsc": "^2.1.6"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged",
@@ -49,5 +50,4 @@
       "@commitlint/config-conventional"
     ]
   }
-
 }
