@@ -22,7 +22,10 @@
   },
   "dependencies": {
     "@nosc/components": "workspace:*",
-    "typescript": "^5.5.4",
     "vue": "^3.4.38"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "typescript": "^5.5.4"
   }
 }

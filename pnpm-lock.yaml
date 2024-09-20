@@ -9,14 +9,18 @@ importers:
   .:
     dependencies:
       '@nosc/components':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:packages/components
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
       vue:
         specifier: ^3.4.38
         version: 3.4.38(typescript@5.5.4)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.5.5
+        version: 22.5.5
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
 
   packages/components:
     dependencies:
@@ -51,6 +55,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
+
+  '@types/node@22.5.5':
+    resolution: {integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA==}
 
   '@vue/compiler-core@3.4.38':
     resolution: {integrity: sha512-8IQOTCWnLFqfHzOGm9+P8OPSEDukgg3Huc92qSG49if/xI2SAwLHQO2qaPQbjCWPBcQoO1WYfXfTACUrWV3c5A==}
@@ -119,6 +126,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
   vue@3.4.38:
     resolution: {integrity: sha512-f0ZgN+mZ5KFgVv9wz0f4OgVKukoXtS3nwET4c2vLBGQR50aI8G0cqbFtLlX9Yiyg3LFGBitruPHt2PxwTduJEw==}
     peerDependencies:
@@ -144,6 +154,10 @@ snapshots:
       to-fast-properties: 2.0.0
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
+
+  '@types/node@22.5.5':
+    dependencies:
+      undici-types: 6.19.8
 
   '@vue/compiler-core@3.4.38':
     dependencies:
@@ -224,6 +238,8 @@ snapshots:
   to-fast-properties@2.0.0: {}
 
   typescript@5.5.4: {}
+
+  undici-types@6.19.8: {}
 
   vue@3.4.38(typescript@5.5.4):
     dependencies:

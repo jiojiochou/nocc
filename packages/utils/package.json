@@ -1,8 +1,8 @@
 {
-    "name": "@nosc/utils",
-    "version": "0.0.1",
-    "main": "index.ts",
-    "peerDependencies": {
-      "vue": "^3.4.38"
-    }
+  "name": "@nosc/utils",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "peerDependencies": {
+    "vue": "^3.4.38"
   }
+}
