@@ -1,14 +1,15 @@
+<script setup lang="ts">
+import { defineOptions } from 'vue'
+
+defineOptions({
+  name: 'NButton',
+})
+</script>
+
 <template>
-  <component>
+  <component :is="tag">
     <button>
-      <slot></slot>
+      <slot />
     </button>
   </component>
 </template>
-<script setup lang="ts">
-import { defineOptions } from 'vue';
-
-defineOptions({
-  name: 'Button',
-})
-</script>

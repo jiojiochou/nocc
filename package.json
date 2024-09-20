@@ -2,6 +2,7 @@
   "name": "nosc",
   "type": "module",
   "version": "1.0.0",
+  "packageManager": "pnpm@9.7.1",
   "description": "no style component",
   "author": "",
   "license": "ISC",
@@ -10,22 +11,25 @@
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "dev": "vite"
-  },
-  "packageManager": "pnpm@9.7.1",
-  "workspaces": [
-    "packages/*"
-  ],
   "engines": {
     "node": ">= 18"
   },
+  "scripts": {
+    "dev": "vite",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "@nosc/components": "workspace:*",
     "vue": "^3.4.38"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^3.6.2",
     "@types/node": "^22.5.5",
+    "eslint": "^9.10.0",
     "typescript": "^5.5.4"
   }
 }

@@ -1,3 +1,3 @@
 <template>
-    <div>authority</div>
+  <div>authority</div>
 </template>
