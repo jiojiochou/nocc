@@ -28,13 +28,10 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@types/node": "^22.5.5",
-    "@vueuse/core": "^11.1.0",
     "eslint": "^9.10.0",
     "lint-staged": "^15.2.10",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.5.4",
-    "vue": "^3.4.38",
-    "vue-tsc": "^2.1.6"
+    "typescript": "^5.5.4"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged",
