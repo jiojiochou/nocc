@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "all components are settled here",
   "main": "index.ts",
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit --skipLibCheck"
+  },
   "peerDependencies": {
     "vue": "^3.4.38"
   }
