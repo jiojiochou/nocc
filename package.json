@@ -18,7 +18,8 @@
     "dev": "vite",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "npx simple-git-hooks"
+    "prepare": "npx simple-git-hooks",
+    "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
     "@nosc/components": "workspace:*"
@@ -31,7 +32,8 @@
     "eslint": "^9.10.0",
     "lint-staged": "^15.2.10",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vue-tsc": "^2.0.26"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged",
