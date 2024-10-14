@@ -11,6 +11,9 @@ importers:
       '@nosc/components':
         specifier: workspace:*
         version: link:packages/components
+      '@nosc/utils':
+        specifier: workspace:*
+        version: link:packages/utils
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^3.6.2

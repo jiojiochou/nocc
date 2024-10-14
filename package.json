@@ -22,7 +22,8 @@
     "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
-    "@nosc/components": "workspace:*"
+    "@nosc/components": "workspace:*",
+    "@nosc/utils": "workspace:*"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.6.2",
