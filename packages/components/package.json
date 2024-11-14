@@ -8,5 +8,8 @@
   },
   "peerDependencies": {
     "vue": "^3.4.38"
+  },
+  "devDependencies": {
+    "@nosc/components": "workspace:^"
   }
 }
