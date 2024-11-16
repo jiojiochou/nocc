@@ -3,6 +3,7 @@
   "packageManager": "pnpm@9.7.1",
   "description": "no style component",
   "author": "codercsx",
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -19,14 +20,12 @@
   "dependencies": {
     "@nosc/components": "workspace:*",
     "@nosc/utils": "workspace:*",
-    "nosc": "workspace:*",
     "vue": "^3.5.13",
     "dayjs": "^1.11.13"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
-    "eslint": "^9.10.0",
     "lint-staged": "^15.2.10",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.4",
