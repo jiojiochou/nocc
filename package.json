@@ -1,18 +1,13 @@
 {
-  "name": "nosc",
-  "type": "module",
-  "version": "1.0.0",
+  "private": true,
   "packageManager": "pnpm@9.7.1",
   "description": "no style component",
-  "author": "",
-  "license": "ISC",
-  "keywords": [],
-  "main": "index.js",
-  "publishConfig": {
-    "access": "public"
-  },
-  "engines": {
-    "node": ">= 18"
+  "author": "codercsx",
+  "workspaces": [
+    "packages/*"
+  ],
+  "peerDependencies": {
+    "vue": "^3.5.13"
   },
   "scripts": {
     "dev": "vite",
@@ -24,20 +19,24 @@
   "dependencies": {
     "@nosc/components": "workspace:*",
     "@nosc/utils": "workspace:*",
-    "lodash-es": "4.17.21",
     "nosc": "workspace:*",
-    "vue": "3.4.19"
+    "vue": "^3.5.13",
+    "dayjs": "^1.11.13"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.6.2",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
-    "@types/node": "^22.5.5",
     "eslint": "^9.10.0",
     "lint-staged": "^15.2.10",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.4",
-    "vue-tsc": "^2.0.26"
+    "vitest": "^2.0.5",
+    "vue": "^^3.5.13",
+    "vue-router": "^4.0.16",
+    "vue-tsc": "^2.0.28"
+  },
+  "engines": {
+    "node": ">= 18"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged",
@@ -46,9 +45,6 @@
   "lint-staged": {
     "*": "eslint --fix"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
