@@ -6,17 +6,18 @@
   "description": "no style component",
   "author": "codercsx",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "play"
   ],
   "engines": {
     "node": ">= 18"
   },
   "scripts": {
-    "dev": "vite",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "npx simple-git-hooks",
-    "typecheck": "vue-tsc --noEmit --skipLibCheck"
+    "typecheck": "vue-tsc --noEmit --skipLibCheck",
+    "play:dev": "pnpm --filter @nosc/play run dev"
   },
   "peerDependencies": {
     "vue": "^3.5.13"
