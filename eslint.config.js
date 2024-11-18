@@ -1,7 +1,7 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
-  ignores: ['/dist', '/node_modules', '/packages/**/dist', '/packages/**/node_modules'],
+  ignores: ['/dist', '/node_modules', '/packages/**/dist', '/packages/**/node_modules', '/play**/dist', '/play**/node_modules'],
   rules: {
     'semi': ['error', 'never'],
     'quotes': ['error', 'single'],
