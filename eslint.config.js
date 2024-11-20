@@ -8,5 +8,6 @@ export default antfu({
     'indent': ['error', 2],
     'no-unused-vars': ['warn'],
     'no-console': 'warn',
+    'no-alert': 'off',
   },
 })

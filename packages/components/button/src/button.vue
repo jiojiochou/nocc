@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { defineOptions, ref } from 'vue'
+import { defineOptions, defineProps } from 'vue'
+import { buttonProps } from './button'
 
 defineOptions({
-  name: 'NButton',
+  name: 'NoButton',
 })
 
-const tag = ref('button')
+defineProps(buttonProps)
 </script>
 
 <template>
   <component :is="tag">
-    <button>
-      <slot />
-    </button>
+    <slot />
   </component>
 </template>
