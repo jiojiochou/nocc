@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineOptions, defineProps } from 'vue'
+import { defineProps } from 'vue'
 import { buttonProps } from './button'
 
 defineOptions({
