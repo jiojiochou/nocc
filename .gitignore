@@ -16,8 +16,8 @@ coverage
 
 /cypress/videos/
 /cypress/screenshots/
-/play/src/**
-!/play/src/assets/**
+# /play/src/**
+# !/play/src/assets/**
 
 # Editor directories and files
 .vscode/*
