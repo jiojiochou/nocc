@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-// import { NoButton } from '@nosc/components'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@nosc/components'
-
-// function handleClick() {
-//   console.log('NoButton-click')
-//   window.alert('click')
-// }
+import { ref } from 'vue'
 
 const categories = ref({
   Recent: [
@@ -67,7 +61,6 @@ const atv = ref('Recent')
     <h4 class="text-center my-0 text-4xl text-white pt-10">
       playground
     </h4>
-    <!-- <NoButton @click="handleClick"> button </NoButton> -->
     <div class="w-full max-w-md px-2 py-16 sm:px-0">
       <TabGroup>
         <TabList v-model="atv" class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
@@ -90,9 +83,36 @@ const atv = ref('Recent')
           </Tab>
         </TabList>
         <TabPanels class="mt-2">
-          <TabPanel>Recent</TabPanel>
-          <TabPanel>Popular</TabPanel>
-          <TabPanel>Trending</TabPanel>
+          <TabPanel
+            v-for="(posts, idx) in Object.values(categories).slice(0, 1)"
+            :key="idx"
+            class="rounded-xl bg-white p-3 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+          >
+            <ul>
+              <li
+                v-for="post in posts"
+                :key="post.id"
+                class="relative rounded-md p-3 hover:bg-gray-100"
+              >
+                <h3 class="text-sm font-medium leading-5">
+                  {{ post.title }}
+                </h3>
+                <ul
+                  class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
+                >
+                  <li>{{ post.date }}</li>
+                  <li>&middot;</li>
+                  <li>{{ post.commentCount }} comments</li>
+                  <li>&middot;</li>
+                  <li>{{ post.shareCount }} shares</li>
+                </ul>
+                <a
+                  href="#"
+                  class="absolute inset-0 rounded-md ring-blue-400 focus:z-10 focus:outline-none focus:ring-2"
+                />
+              </li>
+            </ul>
+          </TabPanel>
         </TabPanels>
       </TabGroup>
     </div>
