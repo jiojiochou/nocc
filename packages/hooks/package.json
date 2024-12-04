@@ -1,0 +1,6 @@
+{
+  "name": "@nosc/hooks",
+  "private": true,
+  "license": "MIT",
+  "main": "index.ts"
+}
