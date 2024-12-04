@@ -1,14 +1,21 @@
 import { useResolveButtonType } from '@nosc/hooks'
-import { computed, defineComponent, Fragment, h } from 'vue'
+import { render } from '@nosc/utils'
+import { computed, defineComponent, h } from 'vue'
 
 export const TabGroup = defineComponent({
   name: 'TabGroup',
   props: {
     as: { type: [Object, String], default: 'div' },
+    selectedIndex: { type: Number, default: null },
+    defaultIndex: { type: Number, default: 0 },
+    vertical: { type: Boolean, default: false },
+    manual: { type: Boolean, default: false },
+    modelValue: { type: [String, Number], default: null },
   },
+  emits: ['update:modelValue'],
   setup(props, { slots }) {
     return () => {
-      return h(props.as, { role: 'tabGroup' }, slots.default?.())
+      return h(props.as, { }, slots.default?.())
     }
   },
 })
@@ -37,12 +44,13 @@ export const Tab = defineComponent({
     )
 
     return () => {
-      return h(Fragment, {
-        'role': 'tab',
-        'disabled': props.disabled ? true : undefined,
-        'aria-disabled': props.disabled,
-        'type': type.value,
-      }, slots.default?.())
+      return render({
+        name: 'Tab',
+        props,
+        slots,
+        attrs,
+        type: type.value,
+      })
     }
   },
 })
