@@ -2,8 +2,6 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@nosc/components'
 import { ref } from 'vue'
 
-const atv = ref('Recent')
-
 const categories = ref({
   Recent: [
     {
@@ -62,7 +60,6 @@ const categories = ref({
       playground
     </h4>
     <TabGroup
-      v-model="atv"
       class="w-full max-w-md px-2 py-16 sm:px-0"
     >
       <TabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
