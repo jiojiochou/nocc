@@ -1,6 +1,5 @@
-import { useResolveButtonType } from '@nosc/hooks'
 import { render } from '@nosc/utils'
-import { computed, defineComponent, h } from 'vue'
+import { defineComponent } from 'vue'
 
 export const TabGroup = defineComponent({
   name: 'TabGroup',
@@ -13,9 +12,14 @@ export const TabGroup = defineComponent({
     modelValue: { type: [String, Number], default: null },
   },
   emits: ['update:modelValue'],
-  setup(props, { slots }) {
+  setup(props, { slots, attrs }) {
     return () => {
-      return h(props.as, { }, slots.default?.())
+      return render({
+        name: 'TabGroup',
+        props,
+        slots,
+        attrs,
+      })
     }
   },
 })
@@ -25,9 +29,15 @@ export const TabList = defineComponent({
   props: {
     as: { type: [Object, String], default: 'div' },
   },
-  setup(props, { slots }) {
+  setup(props, { slots, attrs }) {
     return () => {
-      return h(props.as, { role: 'tabList' }, slots.default?.())
+      // h(props.as, { role: 'tablist' }, slots.default?.())
+      return render({
+        name: 'TabList',
+        props,
+        slots,
+        attrs,
+      })
     }
   },
 })
@@ -39,17 +49,12 @@ export const Tab = defineComponent({
     disabled: { type: Boolean, default: false },
   },
   setup(props, { slots, attrs }) {
-    const type = useResolveButtonType(
-      computed(() => ({ as: props.as, type: attrs.type })),
-    )
-
     return () => {
       return render({
         name: 'Tab',
         props,
         slots,
         attrs,
-        type: type.value,
       })
     }
   },
@@ -60,9 +65,14 @@ export const TabPanels = defineComponent({
   props: {
     as: { type: [Object, String], default: 'div' },
   },
-  setup(props, { slots }) {
+  setup(props, { slots, attrs }) {
     return () => {
-      return h(props.as, { }, slots.default?.())
+      return render({
+        name: 'TabPanels',
+        props,
+        slots,
+        attrs,
+      })
     }
   },
 })
@@ -72,9 +82,14 @@ export const TabPanel = defineComponent({
   props: {
     as: { type: [Object, String], default: 'div' },
   },
-  setup(props, { slots }) {
+  setup(props, { slots, attrs }) {
     return () => {
-      return h(props.as, { }, slots.default?.())
+      return render({
+        name: 'TabPanel',
+        props,
+        slots,
+        attrs,
+      })
     }
   },
 })
