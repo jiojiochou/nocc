@@ -1,9 +1,9 @@
 import { render } from '@nosc/utils'
-import { defineComponent, inject, provide } from 'vue'
+import { computed, defineComponent, inject, onMounted, provide, ref, type Ref } from 'vue'
 
 const TabsContext = Symbol('TabsContext')
 
-function useTabsContext(component: string) {
+function useTabsContext(component: string): any {
   const context = inject(TabsContext, null)
 
   if (context === null) {
@@ -29,7 +29,23 @@ export const TabGroup = defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { slots, attrs }) {
-    provide(TabsContext, {})
+    const selectedIndex = ref(props.selectedIndex ?? props.defaultIndex)
+
+    // tabs Node
+    const tabs = ref<Ref<HTMLElement | null>[]>([])
+
+    const api = {
+      selectedIndex: computed(() => selectedIndex.value ?? props.defaultIndex),
+      tabs,
+      registerTab(tab: typeof tabs['value'][number]) {
+        if (tabs.value.includes(tab))
+          return
+
+        tabs.value.push(tab)
+      },
+    }
+
+    provide(TabsContext, api)
 
     return () => {
       return render({
@@ -48,8 +64,7 @@ export const TabList = defineComponent({
     as: { type: [Object, String], default: 'div' },
   },
   setup(props, { slots, attrs }) {
-    const ComContext = useTabsContext('TabList')
-    console.log(ComContext)
+    // const ComContext = useTabsContext('TabList')
 
     return () => {
       return render({
@@ -69,6 +84,12 @@ export const Tab = defineComponent({
     disabled: { type: Boolean, default: false },
   },
   setup(props, { slots, attrs }) {
+    const api = useTabsContext('Tab')
+
+    const internalTabRef = ref<HTMLElement | null>(null)
+
+    onMounted(() => api.registerTab(internalTabRef))
+
     return () => {
       return render({
         name: 'Tab',
