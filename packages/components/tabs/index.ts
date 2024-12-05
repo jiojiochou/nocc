@@ -1,5 +1,21 @@
 import { render } from '@nosc/utils'
-import { defineComponent } from 'vue'
+import { defineComponent, inject, provide } from 'vue'
+
+const TabsContext = Symbol('TabsContext')
+
+function useTabsContext(component: string) {
+  const context = inject(TabsContext, null)
+
+  if (context === null) {
+    const err = new Error(`<${component} /> is missing a parent <TabGroup /> component.`)
+    if (Error.captureStackTrace)
+      Error.captureStackTrace(err, useTabsContext)
+
+    throw err
+  }
+
+  return context
+}
 
 export const TabGroup = defineComponent({
   name: 'TabGroup',
@@ -13,6 +29,8 @@ export const TabGroup = defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { slots, attrs }) {
+    provide(TabsContext, {})
+
     return () => {
       return render({
         name: 'TabGroup',
@@ -30,8 +48,10 @@ export const TabList = defineComponent({
     as: { type: [Object, String], default: 'div' },
   },
   setup(props, { slots, attrs }) {
+    const ComContext = useTabsContext('TabList')
+    console.log(ComContext)
+
     return () => {
-      // h(props.as, { role: 'tablist' }, slots.default?.())
       return render({
         name: 'TabList',
         props,
