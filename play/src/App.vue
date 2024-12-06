@@ -76,7 +76,7 @@ const categories = ref({
             :class="[
               selected
                 ? 'bg-white text-blue-700 shadow'
-                : 'text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                : 'text-blue-100 hover:bg-white/[0.12] hover:text-white bg-white/10',
             ]"
           >
             {{ category }}
