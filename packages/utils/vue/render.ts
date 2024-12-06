@@ -1,20 +1,23 @@
-import { h } from 'vue'
+import { h, type Slots } from 'vue'
 
 export function render(
-  { props, slots, attrs, name }:
-  { props: Record<string, any>, slots: Record<string, any>, attrs: Record<string, any>, name: string, type?: Record<string, any> | undefined },
+  { ourProps, theirProps, ...main }: {
+    ourProps?: Record<string, any>
+    theirProps: Record<string, any>
+    slot?: Record<string, any>
+    attrs: Record<string, any>
+    slots: Slots
+    name: string
+  },
 ) {
-  const { as } = props
-  const children = slots.default?.()
+  const { as } = theirProps
+  const children = main.slots.default?.(main.slot)
 
   if (as === 'template') {
     return children
   }
 
-  return h(as, {
-    ...attrs,
-    role: name.toLowerCase(),
-  }, {
+  return h(as, Object.assign({}), {
     default: () => children,
   })
 }
