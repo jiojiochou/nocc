@@ -1,9 +1,16 @@
 import { render } from '@nosc/utils'
-import { computed, defineComponent, inject, onMounted, provide, ref, type Ref } from 'vue'
+import { computed, defineComponent, inject, type InjectionKey, onMounted, onUnmounted, provide, ref, type Ref, useId } from 'vue'
 
-const TabsContext = Symbol('TabsContext')
+interface StateDefinition {
+  selectedIndex: Ref<number | null>
+  tabs: Ref<Ref<HTMLElement | null>[]>
+  registerTab: (tab: Ref<HTMLElement | null>) => void
+  unregisterTab: (tab: Ref<HTMLElement | null>) => void
+}
 
-function useTabsContext(component: string): any {
+const TabsContext = Symbol('TabsContext') as InjectionKey<StateDefinition>
+
+function useTabsContext(component: string) {
   const context = inject(TabsContext, null)
 
   if (context === null) {
@@ -43,6 +50,11 @@ export const TabGroup = defineComponent({
 
         tabs.value.push(tab)
       },
+      unregisterTab(tab: typeof tabs['value'][number]) {
+        const item = tabs.value.findIndex(t => t === tab)
+        if (item !== -1)
+          tabs.value.splice(item, 1)
+      },
     }
 
     provide(TabsContext, api)
@@ -50,8 +62,8 @@ export const TabGroup = defineComponent({
     return () => {
       return render({
         name: 'TabGroup',
-        props,
         slots,
+        theirProps: props,
         attrs,
       })
     }
@@ -69,8 +81,8 @@ export const TabList = defineComponent({
     return () => {
       return render({
         name: 'TabList',
-        props,
         slots,
+        theirProps: props,
         attrs,
       })
     }
@@ -82,6 +94,7 @@ export const Tab = defineComponent({
   props: {
     as: { type: [Object, String], default: 'button' },
     disabled: { type: Boolean, default: false },
+    id: { type: String, default: () => `nosc-tabs-tab-${useId()}` },
   },
   setup(props, { slots, attrs }) {
     const api = useTabsContext('Tab')
@@ -89,11 +102,30 @@ export const Tab = defineComponent({
     const internalTabRef = ref<HTMLElement | null>(null)
 
     onMounted(() => api.registerTab(internalTabRef))
+    onUnmounted(() => api.unregisterTab(internalTabRef))
+
+    const internalIndex = computed(() => {
+      const idx = api.tabs.value.indexOf(internalTabRef)
+      if (idx === -1)
+        return 0
+      return idx
+    })
+    const selected = computed(() => internalIndex.value === api.selectedIndex.value)
 
     return () => {
+      const slot = { selected: selected.value, disabled: props.disabled ?? false }
+      const { id, ...theirProps } = props
+      const ourProps = {
+        id,
+        'role': 'tab',
+        'aria-selected': selected.value,
+        'disabled': props.disabled,
+      }
       return render({
         name: 'Tab',
-        props,
+        ourProps,
+        theirProps,
+        slot,
         slots,
         attrs,
       })
@@ -110,8 +142,8 @@ export const TabPanels = defineComponent({
     return () => {
       return render({
         name: 'TabPanels',
-        props,
         slots,
+        theirProps: props,
         attrs,
       })
     }
@@ -127,8 +159,8 @@ export const TabPanel = defineComponent({
     return () => {
       return render({
         name: 'TabPanel',
-        props,
         slots,
+        theirProps: props,
         attrs,
       })
     }
