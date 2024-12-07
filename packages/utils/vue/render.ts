@@ -14,10 +14,12 @@ export function render(
   const children = main.slots.default?.(main.slot)
 
   if (as === 'template') {
+    const [firstChild] = children ?? []
+    Object.assign(firstChild.props!, ourProps)
     return children
   }
 
-  return h(as, Object.assign({}), {
+  return h(as, Object.assign({}, ourProps), {
     default: () => children,
   })
 }

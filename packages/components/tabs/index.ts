@@ -6,6 +6,7 @@ interface StateDefinition {
   tabs: Ref<Ref<HTMLElement | null>[]>
   registerTab: (tab: Ref<HTMLElement | null>) => void
   unregisterTab: (tab: Ref<HTMLElement | null>) => void
+  setSelectedIndex: (indexToSet: number) => void
 }
 
 const TabsContext = Symbol('TabsContext') as InjectionKey<StateDefinition>
@@ -34,8 +35,8 @@ export const TabGroup = defineComponent({
     manual: { type: Boolean, default: false },
     modelValue: { type: [String, Number], default: null },
   },
-  emits: ['update:modelValue'],
-  setup(props, { slots, attrs }) {
+  emits: ['update:modelValue', 'change'],
+  setup(props, { slots, attrs, emit }) {
     const selectedIndex = ref(props.selectedIndex ?? props.defaultIndex)
 
     // tabs Node
@@ -55,13 +56,20 @@ export const TabGroup = defineComponent({
         if (item !== -1)
           tabs.value.splice(item, 1)
       },
+      setSelectedIndex(indexToSet: number) {
+        selectedIndex.value = indexToSet
+        emit('change', indexToSet)
+      },
     }
 
     provide(TabsContext, api)
 
     return () => {
+      const slot = { selectedIndex: selectedIndex.value }
+
       return render({
         name: 'TabGroup',
+        slot,
         slots,
         theirProps: props,
         attrs,
@@ -112,6 +120,12 @@ export const Tab = defineComponent({
     })
     const selected = computed(() => internalIndex.value === api.selectedIndex.value)
 
+    const handleClick = () => {
+      if (props.disabled)
+        return
+      api.setSelectedIndex(internalIndex.value)
+    }
+
     return () => {
       const slot = { selected: selected.value, disabled: props.disabled ?? false }
       const { id, ...theirProps } = props
@@ -120,6 +134,7 @@ export const Tab = defineComponent({
         'role': 'tab',
         'aria-selected': selected.value,
         'disabled': props.disabled,
+        'onClick': handleClick,
       }
       return render({
         name: 'Tab',
