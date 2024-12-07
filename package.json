@@ -17,7 +17,7 @@
     "lint:fix": "eslint . --fix",
     "prepare": "npx simple-git-hooks",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
-    "play:dev": "pnpm --filter @nosc/play run dev"
+    "play:dev": "pnpm --filter @nosc/play run dev --open"
   },
   "peerDependencies": {
     "vue": "^3.5.13"
