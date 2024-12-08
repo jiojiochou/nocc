@@ -18,9 +18,11 @@ interface StateDefinition {
   selectedIndex: Ref<number | null>
   tabs: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>
   panels: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>
+  setSelectedIndex: (indexToSet: number) => void
   registerTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void
   unregisterTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void
-  setSelectedIndex: (indexToSet: number) => void
+  registerPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void
+  unregisterPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void
 }
 
 const TabsContext = Symbol('TabsContext') as InjectionKey<StateDefinition>
@@ -206,8 +208,8 @@ export const TabPanel = defineComponent({
 
     const internalPanelRef = ref<HTMLElement | ComponentInternalInstance | null>(getCurrentInstance())
 
-    onMounted(() => api.registerTab(internalPanelRef))
-    onUnmounted(() => api.unregisterTab(internalPanelRef))
+    onMounted(() => api.registerPanel(internalPanelRef))
+    onUnmounted(() => api.unregisterPanel(internalPanelRef))
 
     const internalIndex = computed(() => {
       const idx = api.panels.value.indexOf(internalPanelRef)
