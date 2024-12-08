@@ -84,7 +84,7 @@ const categories = ref({
       </TabList>
       <TabPanels class="mt-2">
         <TabPanel
-          v-for="(posts, idx) in Object.values(categories).slice(0, 1)"
+          v-for="(posts, idx) in Object.values(categories)"
           :key="idx"
           class="rounded-xl bg-white p-3 ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
         >

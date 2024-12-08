@@ -1,12 +1,28 @@
 import { render } from '@nosc/utils'
-import { computed, defineComponent, inject, type InjectionKey, onMounted, onUnmounted, provide, ref, type Ref, useId } from 'vue'
+import {
+  type ComponentInternalInstance,
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  inject,
+  type InjectionKey,
+  onMounted,
+  onUnmounted,
+  provide,
+  ref,
+  type Ref,
+  useId,
+} from 'vue'
 
 interface StateDefinition {
   selectedIndex: Ref<number | null>
-  tabs: Ref<Ref<HTMLElement | null>[]>
-  registerTab: (tab: Ref<HTMLElement | null>) => void
-  unregisterTab: (tab: Ref<HTMLElement | null>) => void
+  tabs: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>
+  panels: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>
   setSelectedIndex: (indexToSet: number) => void
+  registerTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void
+  unregisterTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void
+  registerPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void
+  unregisterPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void
 }
 
 const TabsContext = Symbol('TabsContext') as InjectionKey<StateDefinition>
@@ -39,16 +55,22 @@ export const TabGroup = defineComponent({
   setup(props, { slots, attrs, emit }) {
     const selectedIndex = ref(props.selectedIndex ?? props.defaultIndex)
 
-    // tabs Node
-    const tabs = ref<Ref<HTMLElement | null>[]>([])
+    // tab组件实例列表
+    const tabs = ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>([])
+    // panel组件实例列表
+    const panels = ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>([])
 
     const api = {
       selectedIndex: computed(() => selectedIndex.value ?? props.defaultIndex),
       tabs,
+      panels,
+      setSelectedIndex(indexToSet: number) {
+        selectedIndex.value = indexToSet
+        emit('change', indexToSet)
+      },
       registerTab(tab: typeof tabs['value'][number]) {
         if (tabs.value.includes(tab))
           return
-
         tabs.value.push(tab)
       },
       unregisterTab(tab: typeof tabs['value'][number]) {
@@ -56,9 +78,15 @@ export const TabGroup = defineComponent({
         if (item !== -1)
           tabs.value.splice(item, 1)
       },
-      setSelectedIndex(indexToSet: number) {
-        selectedIndex.value = indexToSet
-        emit('change', indexToSet)
+      registerPanel(panel: typeof panels['value'][number]) {
+        if (panels.value.includes(panel))
+          return
+        panels.value.push(panel)
+      },
+      unregisterPanel(panel: typeof panels['value'][number]) {
+        const idx = panels.value.indexOf(panel)
+        if (idx !== -1)
+          panels.value.splice(idx, 1)
       },
     }
 
@@ -107,7 +135,7 @@ export const Tab = defineComponent({
   setup(props, { slots, attrs }) {
     const api = useTabsContext('Tab')
 
-    const internalTabRef = ref<HTMLElement | null>(null)
+    const internalTabRef = ref<HTMLElement | ComponentInternalInstance | null>(getCurrentInstance())
 
     onMounted(() => api.registerTab(internalTabRef))
     onUnmounted(() => api.unregisterTab(internalTabRef))
@@ -154,9 +182,13 @@ export const TabPanels = defineComponent({
     as: { type: [Object, String], default: 'div' },
   },
   setup(props, { slots, attrs }) {
+    const api = useTabsContext('TabPanels')
+
     return () => {
+      const slot = { selectedIndex: api.selectedIndex.value }
       return render({
         name: 'TabPanels',
+        slot,
         slots,
         theirProps: props,
         attrs,
@@ -169,12 +201,35 @@ export const TabPanel = defineComponent({
   name: 'TabPanel',
   props: {
     as: { type: [Object, String], default: 'div' },
+    id: { type: String, default: () => `nosc-tabs-panel-${useId()}` },
   },
   setup(props, { slots, attrs }) {
+    const api = useTabsContext('TabPanel')
+
+    const internalPanelRef = ref<HTMLElement | ComponentInternalInstance | null>(getCurrentInstance())
+
+    onMounted(() => api.registerPanel(internalPanelRef))
+    onUnmounted(() => api.unregisterPanel(internalPanelRef))
+
+    const internalIndex = computed(() => {
+      const idx = api.panels.value.indexOf(internalPanelRef)
+      if (idx === -1)
+        return 0
+      return idx
+    })
+    const selected = computed(() => internalIndex.value === api.selectedIndex.value)
+
     return () => {
+      const slot = { selected: selected.value }
+      const ourProps = {
+        role: 'tabpanel',
+      }
+
       return render({
         name: 'TabPanel',
+        slot,
         slots,
+        ourProps,
         theirProps: props,
         attrs,
       })
