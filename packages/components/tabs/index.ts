@@ -4,6 +4,7 @@ import {
   computed,
   defineComponent,
   getCurrentInstance,
+  h,
   inject,
   type InjectionKey,
   onMounted,
@@ -223,6 +224,25 @@ export const TabPanel = defineComponent({
       const slot = { selected: selected.value }
       const ourProps = {
         role: 'tabpanel',
+      }
+
+      if (!selected.value) {
+        return h('span', {
+          hidden: true,
+          style: {
+            position: 'fixed',
+            top: 1,
+            left: 1,
+            width: 1,
+            height: 0,
+            padding: 0,
+            margin: -1,
+            overflow: 'hidden',
+            clip: 'rect(0, 0, 0, 0)',
+            whiteSpace: 'nowrap',
+            borderWidth: '0',
+          },
+        })
       }
 
       return render({
