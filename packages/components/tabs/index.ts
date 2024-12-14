@@ -1,17 +1,15 @@
+import type { ComponentInternalInstance, InjectionKey, Ref } from 'vue'
 import { render } from '@nosc/utils'
 import {
-  type ComponentInternalInstance,
   computed,
   defineComponent,
   getCurrentInstance,
   h,
   inject,
-  type InjectionKey,
   onMounted,
   onUnmounted,
   provide,
   ref,
-  type Ref,
   useId,
 } from 'vue'
 
