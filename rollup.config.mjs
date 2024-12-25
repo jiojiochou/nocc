@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import typescript from '@rollup/plugin-typescript'
+import vue from '@vitejs/plugin-vue'
 
 const inputPath = path.resolve(fileURLToPath(import.meta.url), './packages/components/index.ts')
 
@@ -29,6 +30,7 @@ export default {
   plugins: [
     resolve(),
     commonjs(),
+    vue(),
     typescript({
       tsconfig: 'tsconfig.json',
     }),
