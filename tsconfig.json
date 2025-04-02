@@ -2,10 +2,10 @@
   "compilerOptions": {
     "target": "ESNext",
     "jsx": "preserve",
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM"], // 要使用的类型库
+    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Node",
-    // "baseUrl": "./",
     // "paths": {
     //   "@/*": ["./src/*"]
     // },
