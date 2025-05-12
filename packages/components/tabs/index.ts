@@ -1,43 +1,31 @@
-import type { ComponentInternalInstance, InjectionKey, Ref } from 'vue'
-import { render } from '@nosc/utils'
-import {
-  computed,
-  defineComponent,
-  getCurrentInstance,
-  h,
-  inject,
-  onMounted,
-  onUnmounted,
-  provide,
-  ref,
-  useId,
-} from 'vue'
+import type { ComponentInternalInstance, InjectionKey, Ref } from 'vue';
+import { render } from '@nosc/utils';
+import { computed, defineComponent, getCurrentInstance, h, inject, onMounted, onUnmounted, provide, ref, useId } from 'vue';
 
 interface StateDefinition {
-  selectedIndex: Ref<number | null>
-  tabs: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>
-  panels: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>
-  setSelectedIndex: (indexToSet: number) => void
-  registerTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void
-  unregisterTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void
-  registerPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void
-  unregisterPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void
+  selectedIndex: Ref<number | null>;
+  tabs: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>;
+  panels: Ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>;
+  setSelectedIndex: (indexToSet: number) => void;
+  registerTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void;
+  unregisterTab: (tab: Ref<HTMLElement | ComponentInternalInstance | null>) => void;
+  registerPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void;
+  unregisterPanel: (panel: Ref<HTMLElement | ComponentInternalInstance | null>) => void;
 }
 
-const TabsContext = Symbol('TabsContext') as InjectionKey<StateDefinition>
+const TabsContext = Symbol('TabsContext') as InjectionKey<StateDefinition>;
 
 function useTabsContext(component: string) {
-  const context = inject(TabsContext, null)
+  const context = inject(TabsContext, null);
 
   if (context === null) {
-    const err = new Error(`<${component} /> is missing a parent <TabGroup /> component.`)
-    if (Error.captureStackTrace)
-      Error.captureStackTrace(err, useTabsContext)
+    const err = new Error(`<${component} /> is missing a parent <TabGroup /> component.`);
+    if (Error.captureStackTrace) Error.captureStackTrace(err, useTabsContext);
 
-    throw err
+    throw err;
   }
 
-  return context
+  return context;
 }
 
 export const TabGroup = defineComponent({
@@ -52,47 +40,43 @@ export const TabGroup = defineComponent({
   },
   emits: ['update:modelValue', 'change'],
   setup(props, { slots, attrs, emit }) {
-    const selectedIndex = ref(props.selectedIndex ?? props.defaultIndex)
+    const selectedIndex = ref(props.selectedIndex ?? props.defaultIndex);
 
     // tab组件实例列表
-    const tabs = ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>([])
+    const tabs = ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>([]);
     // panel组件实例列表
-    const panels = ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>([])
+    const panels = ref<Ref<HTMLElement | ComponentInternalInstance | null>[]>([]);
 
     const api = {
       selectedIndex: computed(() => selectedIndex.value ?? props.defaultIndex),
       tabs,
       panels,
       setSelectedIndex(indexToSet: number) {
-        selectedIndex.value = indexToSet
-        emit('change', indexToSet)
+        selectedIndex.value = indexToSet;
+        emit('change', indexToSet);
       },
-      registerTab(tab: typeof tabs['value'][number]) {
-        if (tabs.value.includes(tab))
-          return
-        tabs.value.push(tab)
+      registerTab(tab: (typeof tabs)['value'][number]) {
+        if (tabs.value.includes(tab)) return;
+        tabs.value.push(tab);
       },
-      unregisterTab(tab: typeof tabs['value'][number]) {
-        const item = tabs.value.findIndex(t => t === tab)
-        if (item !== -1)
-          tabs.value.splice(item, 1)
+      unregisterTab(tab: (typeof tabs)['value'][number]) {
+        const item = tabs.value.findIndex((t) => t === tab);
+        if (item !== -1) tabs.value.splice(item, 1);
       },
-      registerPanel(panel: typeof panels['value'][number]) {
-        if (panels.value.includes(panel))
-          return
-        panels.value.push(panel)
+      registerPanel(panel: (typeof panels)['value'][number]) {
+        if (panels.value.includes(panel)) return;
+        panels.value.push(panel);
       },
-      unregisterPanel(panel: typeof panels['value'][number]) {
-        const idx = panels.value.indexOf(panel)
-        if (idx !== -1)
-          panels.value.splice(idx, 1)
+      unregisterPanel(panel: (typeof panels)['value'][number]) {
+        const idx = panels.value.indexOf(panel);
+        if (idx !== -1) panels.value.splice(idx, 1);
       },
-    }
+    };
 
-    provide(TabsContext, api)
+    provide(TabsContext, api);
 
     return () => {
-      const slot = { selectedIndex: selectedIndex.value }
+      const slot = { selectedIndex: selectedIndex.value };
 
       return render({
         name: 'TabGroup',
@@ -100,10 +84,10 @@ export const TabGroup = defineComponent({
         slots,
         theirProps: props,
         attrs,
-      })
-    }
+      });
+    };
   },
-})
+});
 
 export const TabList = defineComponent({
   name: 'TabList',
@@ -119,10 +103,10 @@ export const TabList = defineComponent({
         slots,
         theirProps: props,
         attrs,
-      })
-    }
+      });
+    };
   },
-})
+});
 
 export const Tab = defineComponent({
   name: 'Tab',
@@ -132,37 +116,35 @@ export const Tab = defineComponent({
     id: { type: String, default: () => `nosc-tabs-tab-${useId()}` },
   },
   setup(props, { slots, attrs }) {
-    const api = useTabsContext('Tab')
+    const api = useTabsContext('Tab');
 
-    const internalTabRef = ref<HTMLElement | ComponentInternalInstance | null>(getCurrentInstance())
+    const internalTabRef = ref<HTMLElement | ComponentInternalInstance | null>(getCurrentInstance());
 
-    onMounted(() => api.registerTab(internalTabRef))
-    onUnmounted(() => api.unregisterTab(internalTabRef))
+    onMounted(() => api.registerTab(internalTabRef));
+    onUnmounted(() => api.unregisterTab(internalTabRef));
 
     const internalIndex = computed(() => {
-      const idx = api.tabs.value.indexOf(internalTabRef)
-      if (idx === -1)
-        return 0
-      return idx
-    })
-    const selected = computed(() => internalIndex.value === api.selectedIndex.value)
+      const idx = api.tabs.value.indexOf(internalTabRef);
+      if (idx === -1) return 0;
+      return idx;
+    });
+    const selected = computed(() => internalIndex.value === api.selectedIndex.value);
 
     const handleClick = () => {
-      if (props.disabled)
-        return
-      api.setSelectedIndex(internalIndex.value)
-    }
+      if (props.disabled) return;
+      api.setSelectedIndex(internalIndex.value);
+    };
 
     return () => {
-      const slot = { selected: selected.value, disabled: props.disabled ?? false }
-      const { id, ...theirProps } = props
+      const slot = { selected: selected.value, disabled: props.disabled ?? false };
+      const { id, ...theirProps } = props;
       const ourProps = {
         id,
-        'role': 'tab',
+        role: 'tab',
         'aria-selected': selected.value,
-        'disabled': props.disabled,
-        'onClick': handleClick,
-      }
+        disabled: props.disabled,
+        onClick: handleClick,
+      };
       return render({
         name: 'Tab',
         ourProps,
@@ -170,10 +152,10 @@ export const Tab = defineComponent({
         slot,
         slots,
         attrs,
-      })
-    }
+      });
+    };
   },
-})
+});
 
 export const TabPanels = defineComponent({
   name: 'TabPanels',
@@ -181,20 +163,20 @@ export const TabPanels = defineComponent({
     as: { type: [Object, String], default: 'div' },
   },
   setup(props, { slots, attrs }) {
-    const api = useTabsContext('TabPanels')
+    const api = useTabsContext('TabPanels');
 
     return () => {
-      const slot = { selectedIndex: api.selectedIndex.value }
+      const slot = { selectedIndex: api.selectedIndex.value };
       return render({
         name: 'TabPanels',
         slot,
         slots,
         theirProps: props,
         attrs,
-      })
-    }
+      });
+    };
   },
-})
+});
 
 export const TabPanel = defineComponent({
   name: 'TabPanel',
@@ -203,26 +185,25 @@ export const TabPanel = defineComponent({
     id: { type: String, default: () => `nosc-tabs-panel-${useId()}` },
   },
   setup(props, { slots, attrs }) {
-    const api = useTabsContext('TabPanel')
+    const api = useTabsContext('TabPanel');
 
-    const internalPanelRef = ref<HTMLElement | ComponentInternalInstance | null>(getCurrentInstance())
+    const internalPanelRef = ref<HTMLElement | ComponentInternalInstance | null>(getCurrentInstance());
 
-    onMounted(() => api.registerPanel(internalPanelRef))
-    onUnmounted(() => api.unregisterPanel(internalPanelRef))
+    onMounted(() => api.registerPanel(internalPanelRef));
+    onUnmounted(() => api.unregisterPanel(internalPanelRef));
 
     const internalIndex = computed(() => {
-      const idx = api.panels.value.indexOf(internalPanelRef)
-      if (idx === -1)
-        return 0
-      return idx
-    })
-    const selected = computed(() => internalIndex.value === api.selectedIndex.value)
+      const idx = api.panels.value.indexOf(internalPanelRef);
+      if (idx === -1) return 0;
+      return idx;
+    });
+    const selected = computed(() => internalIndex.value === api.selectedIndex.value);
 
     return () => {
-      const slot = { selected: selected.value }
+      const slot = { selected: selected.value };
       const ourProps = {
         role: 'tabpanel',
-      }
+      };
 
       if (!selected.value) {
         return h('span', {
@@ -240,7 +221,7 @@ export const TabPanel = defineComponent({
             whiteSpace: 'nowrap',
             borderWidth: '0',
           },
-        })
+        });
       }
 
       return render({
@@ -250,7 +231,7 @@ export const TabPanel = defineComponent({
         ourProps,
         theirProps: props,
         attrs,
-      })
-    }
+      });
+    };
   },
-})
+});
