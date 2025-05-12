@@ -1,12 +1,13 @@
 {
-    "semi": false,
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": ".prettierrc",
-        "options": {
-          "parser": "json"
-        }
+  "semi": false,
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json"
       }
-    ]
-  }
+    }
+  ],
+  "trailingComma": "all"
+}
