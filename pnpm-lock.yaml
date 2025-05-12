@@ -51,6 +51,9 @@ importers:
 
   packages/components:
     dependencies:
+      '@nosc/hooks':
+        specifier: workspace:^
+        version: link:../hooks
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.6.3)
