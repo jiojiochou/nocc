@@ -8,7 +8,6 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "npx simple-git-hooks",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
     "play:dev": "pnpm --filter @nosc/play run dev --open",
     "build": "pnpm run -C internal/build start"

@@ -63,9 +63,6 @@ importers:
 
   play:
     dependencies:
-      '@nosc/components':
-        specifier: workspace:^
-        version: link:../packages/components
       vue:
         specifier: ^3.5.12
         version: 3.5.13(typescript@5.6.3)
