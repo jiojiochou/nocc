@@ -1,6 +1,6 @@
 import { defineComponent, h } from 'vue';
 
-export const dialog = defineComponent({
+export const $dialog = defineComponent({
   name: 'dialog',
   setup() {
     return () => {
