@@ -1,3 +1,2 @@
-export * from './authority'
-export * from './button'
-export * from './tabs'
+export * from './authority';
+export * from './tabs';
