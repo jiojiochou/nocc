@@ -23,13 +23,15 @@
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
     "@vitejs/plugin-vue-jsx": "^4.0.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
     "less": "^4.2.1",
     "lint-staged": "^15.2.10",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.4",
     "unocss": "^0.64.1",
     "vitest": "^2.0.5",
-    "eslint": "^9.15.0",
     "vue-tsc": "^2.0.28"
   },
   "simple-git-hooks": {
