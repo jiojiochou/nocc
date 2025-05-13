@@ -6,9 +6,6 @@
   "scripts": {
     "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
-  "peerDependencies": {
-    "vue": "^3.5.13"
-  },
   "dependencies": {
     "@nosc/hooks": "workspace:^"
   }
