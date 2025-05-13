@@ -1,5 +1,5 @@
 {
-  "name": "@nosc/play",
+  "name": "@nosc/playground",
   "type": "module",
   "private": true,
   "scripts": {
