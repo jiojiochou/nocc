@@ -1,22 +1,17 @@
 import { defineComponent, h } from 'vue';
 
-export const $dialog = defineComponent({
+export const Dialog = defineComponent({
   name: '$dialog',
   props: {
-    visible: {
+    open: {
       type: Boolean,
       default: false,
     },
   },
-  setup() {
+  setup(props) {
+    // render函数 === template
     return () => {
-      return h('div', 'dialog');
+      return h('div', { hidden: !props.open }, 'dialog');
     };
-  },
-});
-
-export const $dialogHeader = defineComponent({
-  setup() {
-    return;
   },
 });

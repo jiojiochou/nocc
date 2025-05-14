@@ -1,5 +1,1 @@
-function add(a = 0, b = 0) {
-  return a + b;
-}
-
-add(100, 100);
+export * from './useDialog';

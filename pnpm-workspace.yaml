@@ -1,3 +1,7 @@
 packages:
   - 'packages/*'
   - 'playground'
+
+catalog:
+  vue: ^3.5.12
+  lodash: ^4.17.21
