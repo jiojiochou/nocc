@@ -53,6 +53,9 @@ importers:
 
   playground:
     dependencies:
+      '@nosc/components':
+        specifier: workspace:^
+        version: link:../packages/components
       '@nosc/hooks':
         specifier: workspace:^
         version: link:../packages/hooks
