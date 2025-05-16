@@ -8,10 +8,11 @@ export const Dialog = defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  emits: ['update:open'],
+  setup(props, { emit, slots }) {
     // render函数 === template
     return () => {
-      return h('div', { hidden: !props.open }, 'dialog');
+      return h('div', { hidden: !props.open }, slots);
     };
   },
 });
