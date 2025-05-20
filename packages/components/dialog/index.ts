@@ -41,21 +41,13 @@ export const Dialog = defineComponent({
       type: Boolean,
       default: false,
     },
-    panelClass: {
-      type: String,
-      default: '',
-    },
   },
   emits: ['update:open'],
   setup(props, { attrs, slots }) {
     // render函数 === template
     return () => {
       return props.open
-        ? h(
-            props.as,
-            { hidden: !props.open, ...attrs },
-            h(DialogPanel, { class: props.panelClass }, slots),
-          )
+        ? h(props.as, { hidden: !props.open, ...attrs }, slots)
         : null;
     };
   },
