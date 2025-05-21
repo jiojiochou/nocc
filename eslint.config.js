@@ -1,25 +1,21 @@
 import { createRequire } from 'node:module';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
-const require = createRequire(import.meta.url);
+// const require = createRequire(import.meta.url);
 
 export default [
   {
     plugins: {
-      prettier: require('eslint-plugin-prettier'),
+      // prettier: require('eslint-plugin-prettier'),
     },
+    ignores: ['dist', 'node_modules'],
     rules: {
-      semi: ['error', 'never'],
+      'no-console': 'warn',
       quotes: ['error', 'single'],
       indent: ['error', 2],
     },
-    ignores: [
-      '/dist',
-      '/node_modules',
-      '/packages/**/dist',
-      '/packages/**/node_modules',
-      '/play**/dist',
-      '/play**/node_modules',
-    ],
   },
-  require('eslint-config-prettier'),
+  // require('eslint-config-prettier'),
+  eslintPluginPrettierRecommended,
 ];
