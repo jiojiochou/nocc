@@ -1,21 +1,16 @@
 {
   "compilerOptions": {
     "target": "ESNext", // 指定ECMAScript目标版本
+    "lib": ["ESNext", "DOM"], // 列出要使用的库
+    "baseUrl": ".", // 指定项目根目录
     "module": "ESNext", // 指定代码模块生成规范
     "moduleResolution": "node", // 指定模块解析策略
-    "outDir": "dist", // 指定编译输出的目录
+    "paths": {
+      "@nosc/*": ["packages/*"]
+    },
     "resolveJsonModule": true, // 允许导入JSON文件
     "strict": true, // 严格模式
-    "lib": [
-      "ESNext",
-      "DOM"
-    ], // 列出要使用的库
-    "baseUrl": ".",
-    "paths": {
-      "@nosc/*": [
-        "packages/*"
-      ]
-    },
+    "outDir": "dist" // 指定编译输出的目录
     // "esModuleInterop": true,
     // "forceConsistentCasingInFileNames": true,
     // "skipLibCheck": true
