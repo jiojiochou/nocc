@@ -1,21 +1,17 @@
-import { createRequire } from 'node:module';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import antfu from '@antfu/eslint-config';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
-// const require = createRequire(import.meta.url);
-
-export default [
+export default antfu(
   {
-    plugins: {
-      // prettier: require('eslint-plugin-prettier'),
-    },
+    rules: {},
     ignores: ['dist', 'node_modules'],
+  },
+  {
     rules: {
-      'no-console': 'warn',
-      quotes: ['error', 'single'],
-      indent: ['error', 2],
+      'prettier/prettier': ['off', { usePrettierrc: true }],
     },
   },
-  // require('eslint-config-prettier'),
   eslintPluginPrettierRecommended,
-];
+  eslintConfigPrettier,
+);
