@@ -1,3 +1,3 @@
-import Authority from './src/authority.vue';
+import Authority from './src/authority.vue'
 
-export default Authority;
+export default Authority
