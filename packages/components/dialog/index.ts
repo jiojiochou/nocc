@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue';
+import { defineComponent, h } from 'vue'
 
 export const DialogPanel = defineComponent({
   name: '$dialogPanel',
@@ -10,10 +10,10 @@ export const DialogPanel = defineComponent({
   },
   setup(props, { slots, attrs }) {
     return () => {
-      return h(props.as, { ...attrs }, slots);
-    };
+      return h(props.as, { ...attrs }, slots)
+    }
   },
-});
+})
 
 export const DialogTitle = defineComponent({
   name: '$dialogTitle',
@@ -25,10 +25,10 @@ export const DialogTitle = defineComponent({
   },
   setup(props, { slots, attrs }) {
     return () => {
-      return h(props.as, { ...attrs }, slots);
-    };
+      return h(props.as, { ...attrs }, slots)
+    }
   },
-});
+})
 
 export const Dialog = defineComponent({
   name: '$dialog',
@@ -48,7 +48,7 @@ export const Dialog = defineComponent({
     return () => {
       return props.open
         ? h(props.as, { hidden: !props.open, ...attrs }, slots)
-        : null;
-    };
+        : null
+    }
   },
-});
+})

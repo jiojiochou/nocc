@@ -1,8 +1,8 @@
 {
   "name": "@nosc/hooks",
   "type": "module",
-  "main": "index.ts",
   "version": "0.0.1",
+  "main": "index.ts",
   "dependencies": {
     "dayjs": "^1.11.13"
   }
