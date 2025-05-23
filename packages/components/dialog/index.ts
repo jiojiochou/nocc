@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, watch } from 'vue'
 
 export const DialogPanel = defineComponent({
   name: '$dialogPanel',
@@ -43,11 +43,26 @@ export const Dialog = defineComponent({
     },
   },
   emits: ['update:open'],
-  setup(props, { attrs, slots }) {
+  setup(props, { attrs, slots, emit }) {
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        emit('update:open', false)
+      }
+    }
+
+    watch(() => props.open, (val: boolean) => {
+      if (val) {
+        document.addEventListener('keydown', handleKeydown)
+      }
+      else {
+        document.removeEventListener('keydown', handleKeydown)
+      }
+    })
+
     // render函数 === template
     return () => {
       return props.open
-        ? h(props.as, { hidden: !props.open, ...attrs }, slots)
+        ? h(props.as, { 'hidden': !props.open, ...attrs, 'role': 'dialog', 'aria-modal': true }, slots)
         : null
     }
   },

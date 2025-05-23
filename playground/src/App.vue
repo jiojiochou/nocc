@@ -4,6 +4,10 @@ import { ref } from 'vue'
 import CloseIcon from './assets/icon/close.svg'
 
 const isOpen = ref(false)
+
+function handleClose(/** val: boolean */) {
+  // console.log(val)
+}
 </script>
 
 <template>
@@ -16,10 +20,10 @@ const isOpen = ref(false)
     >
       支付
     </button>
-    <Dialog :open="isOpen" class="fixed inset-0 bg-black/25 flex items-center justify-center">
+    <Dialog v-model:open="isOpen" class="fixed inset-0 bg-black/25 flex items-center justify-center" @close="handleClose">
       <DialogPanel
         class="absolute z-10 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 align-middle
-      shadow-xl transition-all"
+        shadow-xl transition-all"
       >
         <DialogTitle class="text-lg font-medium leading-6 text-gray-900 flex items-center justify-between">
           <span>付款成功</span>
