@@ -23,7 +23,7 @@ const isOpen = ref(false)
       >
         <DialogTitle class="text-lg font-medium leading-6 text-gray-900 flex items-center justify-between">
           <span>付款成功</span>
-          <img class="w-6 h-6 rounded bg-gray/30 cursor-pointer" :src="CloseIcon">
+          <img class="w-6 h-6 rounded bg-gray/30 cursor-pointer" :src="CloseIcon" @click="isOpen = false">
         </DialogTitle>
         <div class="mt-2 text-sm text-gray-500">
           您的付款已成功提交。我们已经给你发了一封邮件，告诉你订单的所有细节。

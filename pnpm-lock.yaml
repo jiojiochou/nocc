@@ -54,6 +54,12 @@ importers:
         specifier: ^1.11.13
         version: 1.11.13
 
+  packages/ripe:
+    dependencies:
+      '@nosc/components':
+        specifier: workspace:^
+        version: link:../components
+
   playground:
     dependencies:
       '@nosc/components':

@@ -1,0 +1,9 @@
+{
+  "name": "@nosc/ripe",
+  "version": "0.0.1",
+  "description": "cooked",
+  "main": "index.ts",
+  "dependencies": {
+    "@nosc/components": "workspace:^"
+  }
+}
