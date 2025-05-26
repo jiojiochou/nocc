@@ -10,38 +10,6 @@ function useDialogContext(key: typeof DIALOG_CONTEXT, component: Component) {
   return inject(key)
 }
 
-export const DialogPanel = defineComponent({
-  name: '$dialogPanel',
-  props: {
-    as: {
-      type: String,
-      default: 'div',
-    },
-  },
-  setup(props, { slots, attrs }) {
-    const cargo = useDialogContext(DIALOG_CONTEXT, DialogPanel)
-
-    return () => {
-      return h(props.as, { ...attrs, cargo }, slots)
-    }
-  },
-})
-
-export const DialogTitle = defineComponent({
-  name: '$dialogTitle',
-  props: {
-    as: {
-      type: String,
-      default: 'h2',
-    },
-  },
-  setup(props, { slots, attrs }) {
-    return () => {
-      return h(props.as, { ...attrs }, slots)
-    }
-  },
-})
-
 export const Dialog = defineComponent({
   name: '$dialog',
   props: {
@@ -72,7 +40,7 @@ export const Dialog = defineComponent({
     })
 
     provide(DIALOG_CONTEXT, {
-      ikun: 'csx',
+      close: () => emit('update:open', false),
     })
 
     // render函数 === template
@@ -80,6 +48,57 @@ export const Dialog = defineComponent({
       return props.open
         ? h(props.as, { 'hidden': !props.open, ...attrs, 'role': 'dialog', 'aria-modal': true }, slots)
         : null
+    }
+  },
+})
+
+export const DialogOverlay = defineComponent({
+  name: '$dialogOverlay',
+  props: {
+    as: {
+      type: String,
+      default: 'div',
+    },
+  },
+  setup(props, { slots }) {
+    const api = useDialogContext(DIALOG_CONTEXT, DialogOverlay)
+
+    const { close } = api as { close: any }
+
+    return () => {
+      return h(props.as, { onClick: close }, slots)
+    }
+  },
+})
+
+export const DialogPanel = defineComponent({
+  name: '$dialogPanel',
+  props: {
+    as: {
+      type: String,
+      default: 'div',
+    },
+  },
+  setup(props, { slots, attrs }) {
+    const cargo = useDialogContext(DIALOG_CONTEXT, DialogPanel)
+
+    return () => {
+      return h(props.as, { ...attrs, cargo }, slots)
+    }
+  },
+})
+
+export const DialogTitle = defineComponent({
+  name: '$dialogTitle',
+  props: {
+    as: {
+      type: String,
+      default: 'h2',
+    },
+  },
+  setup(props, { slots, attrs }) {
+    return () => {
+      return h(props.as, { ...attrs }, slots)
     }
   },
 })

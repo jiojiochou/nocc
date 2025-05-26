@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Dialog, DialogPanel, DialogTitle } from '@nosc/components'
+import { Dialog, DialogOverlay, DialogPanel, DialogTitle } from '@nosc/components'
 import { ref } from 'vue'
 import CloseIcon from './assets/icon/close.svg'
 
@@ -8,6 +8,10 @@ const isOpen = ref(false)
 function handleClose(/** val: boolean */) {
   // console.log(val)
 }
+
+document.addEventListener('keydown', () => {
+  console.warn('keydown@@@@@@@@@@@@@@@@@@@@@')
+})
 </script>
 
 <template>
@@ -20,7 +24,8 @@ function handleClose(/** val: boolean */) {
     >
       支付
     </button>
-    <Dialog v-model:open="isOpen" class="fixed inset-0 bg-black/25 flex items-center justify-center" @close="handleClose">
+    <Dialog v-model:open="isOpen" class="flex items-center justify-center" @close="handleClose">
+      <DialogOverlay class="fixed inset-0 bg-black/25" />
       <DialogPanel
         class="absolute z-10 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 align-middle
         shadow-xl transition-all"
