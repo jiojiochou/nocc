@@ -1,4 +1,14 @@
-import { defineComponent, h, watch } from 'vue'
+import type { Component } from 'vue'
+import { defineComponent, h, inject, provide, watch } from 'vue'
+
+const DIALOG_CONTEXT = Symbol('DIALOG_CONTEXT')
+
+function useDialogContext(key: typeof DIALOG_CONTEXT, component: Component) {
+  if (!component) {
+    throw new Error('<component /> 不能使用!!!')
+  }
+  return inject(key)
+}
 
 export const DialogPanel = defineComponent({
   name: '$dialogPanel',
@@ -9,8 +19,10 @@ export const DialogPanel = defineComponent({
     },
   },
   setup(props, { slots, attrs }) {
+    const cargo = useDialogContext(DIALOG_CONTEXT, DialogPanel)
+
     return () => {
-      return h(props.as, { ...attrs }, slots)
+      return h(props.as, { ...attrs, cargo }, slots)
     }
   },
 })
@@ -57,6 +69,10 @@ export const Dialog = defineComponent({
       else {
         document.removeEventListener('keydown', handleKeydown)
       }
+    })
+
+    provide(DIALOG_CONTEXT, {
+      ikun: 'csx',
     })
 
     // render函数 === template
