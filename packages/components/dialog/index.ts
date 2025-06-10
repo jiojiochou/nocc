@@ -43,10 +43,16 @@ export const Dialog = defineComponent({
       close: () => emit('update:open', false),
     })
 
-    // render函数 === template
+    // render函数 === <template />
     return () => {
       return props.open
-        ? h(props.as, { 'hidden': !props.open, ...attrs, 'role': 'dialog', 'aria-modal': true }, slots)
+        ? h(props.as, {
+            'hidden': !props.open,
+            ...attrs,
+            'role': 'dialog',
+            'aria-modal': true,
+            'aria-label': '', // warning | error
+          }, slots)
         : null
     }
   },
