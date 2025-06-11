@@ -2,8 +2,11 @@ import type { Component } from 'vue'
 import { defineComponent, h, inject, provide, watch } from 'vue'
 
 const DIALOG_CONTEXT = Symbol('DIALOG_CONTEXT')
+interface DialogContext {
+  close: () => void
+}
 
-function useDialogContext(key: typeof DIALOG_CONTEXT, component: Component) {
+function useDialogContext(key: typeof DIALOG_CONTEXT, component: Component): DialogContext | undefined {
   if (!component) {
     throw new Error('<component /> 不能使用!!!')
   }
@@ -69,7 +72,7 @@ export const DialogOverlay = defineComponent({
   setup(props, { slots }) {
     const api = useDialogContext(DIALOG_CONTEXT, DialogOverlay)
 
-    const { close } = api as { close: any }
+    const { close } = api!
 
     return () => {
       return h(props.as, { onClick: close }, slots)
@@ -86,10 +89,9 @@ export const DialogPanel = defineComponent({
     },
   },
   setup(props, { slots, attrs }) {
-    const cargo = useDialogContext(DIALOG_CONTEXT, DialogPanel)
-
+    // const api = useDialogContext(DIALOG_CONTEXT, DialogPanel)
     return () => {
-      return h(props.as, { ...attrs, cargo }, slots)
+      return h(props.as, { ...attrs }, slots)
     }
   },
 })
