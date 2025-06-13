@@ -1,16 +1,21 @@
-import type { Component } from 'vue'
+import type { InjectionKey } from 'vue'
 import { defineComponent, h, inject, provide, watch } from 'vue'
 
-const DIALOG_CONTEXT = Symbol('DIALOG_CONTEXT')
 interface DialogContext {
   close: () => void
 }
 
-function useDialogContext(key: typeof DIALOG_CONTEXT, component: Component): DialogContext | undefined {
-  if (!component) {
-    throw new Error('<component /> 不能使用!!!')
+const DIALOG_CONTEXT = Symbol('DIALOG_CONTEXT') as InjectionKey<DialogContext>
+
+function useDialogContext(component: string) {
+  const context = inject(DIALOG_CONTEXT, null)
+  if (context === null) {
+    const err = new Error(`<${component} /> is missing a parent <Dialog /> component.`)
+    if (Error.captureStackTrace)
+      Error.captureStackTrace(err, useDialogContext)
+    throw err
   }
-  return inject(key)
+  return context
 }
 
 export const Dialog = defineComponent({
@@ -27,7 +32,7 @@ export const Dialog = defineComponent({
   },
   emits: ['update:open'],
   setup(props, { attrs, slots, emit }) {
-    const handleKeydown = (e: KeyboardEvent) => {
+    const handleKeydownExit = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         emit('update:open', false)
       }
@@ -35,10 +40,10 @@ export const Dialog = defineComponent({
 
     watch(() => props.open, (val: boolean) => {
       if (val) {
-        document.addEventListener('keydown', handleKeydown)
+        document.addEventListener('keydown', handleKeydownExit)
       }
       else {
-        document.removeEventListener('keydown', handleKeydown)
+        document.removeEventListener('keydown', handleKeydownExit)
       }
     })
 
@@ -49,13 +54,17 @@ export const Dialog = defineComponent({
     // render函数 === <template />
     return () => {
       return props.open
-        ? h(props.as, {
-            'hidden': !props.open,
-            ...attrs,
-            'role': 'dialog',
-            'aria-modal': true,
-            'aria-label': '', // warning | error
-          }, slots)
+        ? h(
+            props.as,
+            {
+              'hidden': !props.open,
+              ...attrs,
+              'role': 'dialog',
+              'aria-modal': true,
+              'aria-label': '', // warning | error
+            },
+            slots,
+          )
         : null
     }
   },
@@ -70,12 +79,25 @@ export const DialogOverlay = defineComponent({
     },
   },
   setup(props, { slots }) {
-    const api = useDialogContext(DIALOG_CONTEXT, DialogOverlay)
+    const api = useDialogContext('$dialogOverlay')
 
-    const { close } = api!
+    function handleClick(event: MouseEvent) {
+      if (event.target !== event.currentTarget)
+        return
+      event.preventDefault()
+      event.stopPropagation()
+      api.close()
+    }
 
     return () => {
-      return h(props.as, { onClick: close }, slots)
+      return h(
+        props.as,
+        {
+          'aria-hidden': true,
+          'onClick': handleClick,
+        },
+        slots,
+      )
     }
   },
 })
