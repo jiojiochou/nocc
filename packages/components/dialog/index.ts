@@ -1,5 +1,5 @@
 import type { InjectionKey } from 'vue'
-import { defineComponent, h, inject, provide, watch } from 'vue'
+import { defineComponent, h, inject, provide, useId, watch } from 'vue'
 
 interface DialogContext {
   close: () => void
@@ -19,16 +19,14 @@ function useDialogContext(component: string) {
 }
 
 export const Dialog = defineComponent({
-  name: '$dialog',
+  name: 'Dialog',
   props: {
-    as: {
+    id: {
       type: String,
-      default: 'div',
+      default: () => `dialog-id-${useId()}`,
     },
-    open: {
-      type: Boolean,
-      default: false,
-    },
+    as: { type: String, default: 'div' },
+    open: { type: Boolean, default: false },
   },
   emits: ['update:open'],
   setup(props, { attrs, slots, emit }) {
@@ -38,6 +36,7 @@ export const Dialog = defineComponent({
       }
     }
 
+    // watchEffect在组件没有渲染前运行
     watch(() => props.open, (val: boolean) => {
       if (val) {
         document.addEventListener('keydown', handleKeydownExit)
@@ -57,6 +56,7 @@ export const Dialog = defineComponent({
         ? h(
             props.as,
             {
+              'id': props.id,
               'hidden': !props.open,
               ...attrs,
               'role': 'dialog',
@@ -71,7 +71,7 @@ export const Dialog = defineComponent({
 })
 
 export const DialogOverlay = defineComponent({
-  name: '$dialogOverlay',
+  name: 'DialogOverlay',
   props: {
     as: {
       type: String,
@@ -79,9 +79,10 @@ export const DialogOverlay = defineComponent({
     },
   },
   setup(props, { slots }) {
-    const api = useDialogContext('$dialogOverlay')
+    const api = useDialogContext('DialogOverlay')
 
     function handleClick(event: MouseEvent) {
+      // 点击事件发生的元素: event.target, 点击事件绑定的元素: event.currentTarget
       if (event.target !== event.currentTarget)
         return
       event.preventDefault()
@@ -103,7 +104,7 @@ export const DialogOverlay = defineComponent({
 })
 
 export const DialogPanel = defineComponent({
-  name: '$dialogPanel',
+  name: 'DialogPanel',
   props: {
     as: {
       type: String,
@@ -119,7 +120,7 @@ export const DialogPanel = defineComponent({
 })
 
 export const DialogTitle = defineComponent({
-  name: '$dialogTitle',
+  name: 'DialogTitle',
   props: {
     as: {
       type: String,
