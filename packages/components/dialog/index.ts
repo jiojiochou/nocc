@@ -31,7 +31,7 @@ export const Dialog = defineComponent({
   emits: ['update:open'],
   setup(props, { attrs, slots, emit }) {
     const handleKeydownExit = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' || e.code === 'Escape') {
         emit('update:open', false)
       }
     }
