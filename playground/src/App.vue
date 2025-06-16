@@ -9,8 +9,8 @@ function handleClose(/** val: boolean */) {
   // console.log(val)
 }
 
-document.addEventListener('keydown', () => {
-  console.warn('keydown@@@@@@@@@@@@@@@@@@@@@')
+document.addEventListener('keydown', (e: KeyboardEvent) => {
+  console.warn('keydown@@@@@@@@@@@@@@@@@@@@@: ', e)
 })
 </script>
 
