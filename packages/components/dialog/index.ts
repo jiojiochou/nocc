@@ -1,5 +1,5 @@
 import type { InjectionKey } from 'vue'
-import { defineComponent, h, inject, provide, useId, watch } from 'vue'
+import { defineComponent, h, inject, provide, useId, watchPostEffect } from 'vue'
 
 interface DialogContext {
   close: () => void
@@ -37,12 +37,15 @@ export const Dialog = defineComponent({
     }
 
     // watchEffect在组件没有渲染前运行
-    watch(() => props.open, (val: boolean) => {
-      if (val) {
-        document.addEventListener('keydown', handleKeydownExit)
+    watchPostEffect(() => {
+      const dialogElement = document.querySelector(`#${props.id}`) as HTMLElement | null
+
+      if (props.open && dialogElement) {
+        dialogElement.focus()
+        dialogElement.addEventListener('keydown', handleKeydownExit)
       }
-      else {
-        document.removeEventListener('keydown', handleKeydownExit)
+      else if (dialogElement) {
+        dialogElement.removeEventListener('keydown', handleKeydownExit)
       }
     })
 
@@ -62,10 +65,11 @@ export const Dialog = defineComponent({
               'role': 'dialog',
               'aria-modal': true,
               'aria-label': '', // warning | error
+              'tabindex': '0',
             },
             slots,
           )
-        : null
+        : h('div')
     }
   },
 })
