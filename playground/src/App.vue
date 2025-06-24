@@ -8,10 +8,6 @@ const isOpen = ref(false)
 function handleClose(/** val: boolean */) {
   // console.log(val)
 }
-
-document.addEventListener('keydown', (e: KeyboardEvent) => {
-  console.warn('keydown@@@@@@@@@@@@@@@@@@@@@: ', e)
-})
 </script>
 
 <template>
@@ -24,7 +20,7 @@ document.addEventListener('keydown', (e: KeyboardEvent) => {
     >
       支付
     </button>
-    <Dialog v-model:open="isOpen" class="flex items-center justify-center" @close="handleClose">
+    <Dialog v-model:open="isOpen" class="flex items-center justify-center" @closed="handleClose">
       <DialogOverlay class="fixed inset-0 bg-black/25" />
       <DialogPanel
         class="absolute z-10 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 align-middle

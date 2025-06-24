@@ -28,7 +28,7 @@ export const Dialog = defineComponent({
     as: { type: String, default: 'div' },
     open: { type: Boolean, default: false },
   },
-  emits: ['update:open'],
+  emits: ['update:open', 'closed'],
   setup(props, { attrs, slots, emit }) {
     const handleKeydownExit = (e: KeyboardEvent) => {
       if (e.key === 'Escape' || e.code === 'Escape') {
@@ -48,6 +48,19 @@ export const Dialog = defineComponent({
         dialogElement.removeEventListener('keydown', handleKeydownExit)
       }
     })
+
+    let firstOpen = 0
+    watchPostEffect(() => {
+      if (!props.open && firstOpen++ >= 1) {
+        firstOpen = 1
+        emit('closed')
+      }
+    })
+
+    // watch(() => props.open, (val) => {
+    //   if (!val)
+    //     emit('closed')
+    // })
 
     provide(DIALOG_CONTEXT, {
       close: () => emit('update:open', false),
@@ -69,7 +82,7 @@ export const Dialog = defineComponent({
             },
             slots,
           )
-        : h('div')
+        : null
     }
   },
 })
