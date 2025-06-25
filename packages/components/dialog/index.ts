@@ -49,6 +49,7 @@ export const Dialog = defineComponent({
       }
     })
 
+    // 方法一
     let firstOpen = 0
     watchPostEffect(() => {
       if (!props.open && firstOpen++ >= 1) {
@@ -57,6 +58,7 @@ export const Dialog = defineComponent({
       }
     })
 
+    // 方法二
     // watch(() => props.open, (val) => {
     //   if (!val)
     //     emit('closed')
