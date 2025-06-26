@@ -1,5 +1,5 @@
 {
-  "name": "@nosc/components",
+  "name": "@nocc/components",
   "version": "0.0.1",
   "description": "all components are settled here",
   "main": "index.ts",
@@ -7,7 +7,7 @@
     "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
-    "@nosc/hooks": "workspace:^",
+    "@nocc/hooks": "workspace:^",
     "@vueuse/core": "^13.4.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@nosc/playground",
+  "name": "@nocc/playground",
   "type": "module",
   "private": true,
   "scripts": {
@@ -8,8 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@nosc/components": "workspace:^",
-    "@nosc/hooks": "workspace:^",
+    "@nocc/components": "workspace:^",
+    "@nocc/hooks": "workspace:^",
     "vue": "^3.5.12"
   },
   "devDependencies": {

@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
-    "play:dev": "pnpm --filter @nosc/playground run dev --open",
+    "play:dev": "pnpm --filter @nocc/playground run dev --open",
     "build": "pnpm run -C internal/build start"
   },
   "devDependencies": {

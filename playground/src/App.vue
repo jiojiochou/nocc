@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Dialog, DialogOverlay, DialogPanel, DialogTitle } from '@nosc/components'
+import { Dialog, DialogOverlay, DialogPanel, DialogTitle } from '@nocc/components'
 import { ref } from 'vue'
 import CloseIcon from './assets/icon/close.svg'
 
