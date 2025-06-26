@@ -7,6 +7,7 @@
     "typecheck": "vue-tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
-    "@nosc/hooks": "workspace:^"
+    "@nosc/hooks": "workspace:^",
+    "@vueuse/core": "^13.4.0"
   }
 }
