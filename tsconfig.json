@@ -6,7 +6,7 @@
     "module": "ESNext", // 指定代码模块生成规范
     "moduleResolution": "node", // 指定模块解析策略
     "paths": {
-      "@nosc/*": ["packages/*"]
+      "@nocc/*": ["packages/*"]
     },
     "resolveJsonModule": true, // 允许导入JSON文件
     "strict": true, // 严格模式

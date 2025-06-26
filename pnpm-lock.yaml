@@ -44,7 +44,7 @@ importers:
 
   packages/components:
     dependencies:
-      '@nosc/hooks':
+      '@nocc/hooks':
         specifier: workspace:^
         version: link:../hooks
       '@vueuse/core':
@@ -59,16 +59,16 @@ importers:
 
   packages/ripe:
     dependencies:
-      '@nosc/components':
+      '@nocc/components':
         specifier: workspace:^
         version: link:../components
 
   playground:
     dependencies:
-      '@nosc/components':
+      '@nocc/components':
         specifier: workspace:^
         version: link:../packages/components
-      '@nosc/hooks':
+      '@nocc/hooks':
         specifier: workspace:^
         version: link:../packages/hooks
       vue:
