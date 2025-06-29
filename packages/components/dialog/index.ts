@@ -1,5 +1,5 @@
 import type { InjectionKey } from 'vue'
-import { defineComponent, h, inject, provide, useId, watchPostEffect } from 'vue'
+import { defineComponent, h, inject, provide, Teleport, useId, watchPostEffect } from 'vue'
 
 interface DialogContext {
   close: () => void
@@ -21,12 +21,11 @@ function useDialogContext(component: string) {
 export const Dialog = defineComponent({
   name: 'Dialog',
   props: {
-    id: {
-      type: String,
-      default: () => `dialog-id-${useId()}`,
-    },
+    id: { type: String, default: () => `dialog-id-${useId()}` },
     as: { type: String, default: 'div' },
     open: { type: Boolean, default: false },
+    class: { type: String, default: '' },
+    appendTo: { type: String, default: 'body' },
   },
   emits: ['update:open', 'closed'],
   setup(props, { attrs, slots, emit }) {
@@ -70,21 +69,23 @@ export const Dialog = defineComponent({
 
     // render函数 === <template />
     return () => {
-      return props.open
-        ? h(
-            props.as,
-            {
-              'id': props.id,
-              'hidden': !props.open,
-              ...attrs,
-              'role': 'dialog',
-              'aria-modal': true,
-              'aria-label': '', // warning | error
-              'tabindex': '0',
-            },
-            slots,
-          )
-        : null
+      return h(Teleport, { to: props.appendTo }, h(
+        props.as,
+        {
+          ...attrs,
+          'id': props.id,
+          'class': props.class,
+          'hidden': !props.open,
+          'tabindex': '0',
+          'role': 'dialog',
+
+          'aria-modal': '',
+          'aria-label': '', // warning | error
+          'aria-labelledby': '',
+          'aria-describedby': '',
+        },
+        slots,
+      ))
     }
   },
 })
