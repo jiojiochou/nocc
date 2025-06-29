@@ -20,7 +20,11 @@ function handleClose(/** val: boolean */) {
     >
       支付
     </button>
-    <Dialog v-model:open="isOpen" class="flex items-center justify-center" @closed="handleClose">
+    <Dialog
+      v-model:open="isOpen" class="flex items-center justify-center fixed inset-0 transition-all"
+      style="color: red"
+      @closed="handleClose"
+    >
       <DialogOverlay class="fixed inset-0 bg-black/25" />
       <DialogPanel
         class="absolute z-10 max-w-md transform overflow-hidden rounded-2xl bg-white p-6 align-middle
